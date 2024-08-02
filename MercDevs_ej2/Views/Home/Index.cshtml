@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MercDevs_ej2.Models.Datosfichatecnica>
+
+<div class="text-center">
+    <h1 class="display-4">Datos de Ficha Técnica en Proceso</h1>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre Completo del Cliente</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Finalización</th>
+            <th>Marca del Equipo</th>
+            <th>Modelo del Equipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ficha in Model)
+        {
+            <tr>
+                <td>
+                    @if (ficha.RecepcionEquipo != null && ficha.RecepcionEquipo.IdClienteNavigation != null)
+                    {
+                        <a asp-controller="Clientes" asp-action="Details" asp-route-id="@ficha.RecepcionEquipo.IdCliente">
+                            @ficha.RecepcionEquipo.IdClienteNavigation.Nombre @ficha.RecepcionEquipo.IdClienteNavigation.Apellido
+                        </a>
+                    }
+                    else
+                    {
+                        <span>No disponible</span>
+                    }
+                </td>
+                <td>@ficha.FechaInicio?.ToString("dd/MM/yyyy")</td>
+                <td>@ficha.FechaFinalizacion?.ToString("dd/MM/yyyy")</td>
+                <td>@ficha.RecepcionEquipo?.MarcaPc </td>
+                <td>@ficha.RecepcionEquipo?.ModeloPc </td>
+                <td>
+                    <a asp-controller="Datosfichatecnicas" asp-action="FichaTecnica" asp-route-id="@ficha.IdDatosFichaTecnica">Ver Ficha</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
